@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24D81" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CitaMedica" representedClassName="CitaMedica" syncable="YES" codeGenerationType="class">
+        <attribute name="estado" optional="YES" attributeType="String"/>
+        <attribute name="fecha_Cita" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="hora_cita" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id_Cita" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id_consultorio" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id_medico" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id_paciente" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="fk_consultorio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Consultorio" inverseName="fk_citaMedica" inverseEntity="Consultorio"/>
+        <relationship name="fk_medico" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Medico" inverseName="fk_citaMedica" inverseEntity="Medico"/>
+        <relationship name="fk_paciente" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Paciente" inverseName="fk_citaMedica" inverseEntity="Paciente"/>
+    </entity>
+    <entity name="Consultorio" representedClassName="Consultorio" syncable="YES" codeGenerationType="class">
+        <attribute name="id_Consultorio" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nombre" optional="YES" attributeType="String"/>
+        <attribute name="ubicacion" optional="YES" attributeType="String"/>
+        <relationship name="fk_citaMedica" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CitaMedica" inverseName="fk_consultorio" inverseEntity="CitaMedica"/>
+    </entity>
+    <entity name="Especialidad" representedClassName="Especialidad" syncable="YES" codeGenerationType="class">
+        <attribute name="descripcion" optional="YES" attributeType="String"/>
+        <attribute name="id_especialidad" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nombre" optional="YES" attributeType="String"/>
+        <relationship name="fk_medico" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medico" inverseName="fk_especialidad" inverseEntity="Medico"/>
+    </entity>
+    <entity name="HorarioMedico" representedClassName="HorarioMedico" syncable="YES" codeGenerationType="class">
+        <attribute name="dia_semana" optional="YES" attributeType="String"/>
+        <attribute name="hora_fin" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="hora_inicio" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id_horario" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id_medico" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="fk_medico" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Medico" inverseName="fk_horarioMedico" inverseEntity="Medico"/>
+    </entity>
+    <entity name="Medico" representedClassName="Medico" syncable="YES" codeGenerationType="class">
+        <attribute name="cmp" optional="YES" attributeType="String"/>
+        <attribute name="correo" optional="YES" attributeType="String"/>
+        <attribute name="id_especialidad" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id_medico" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nombres" optional="YES" attributeType="String"/>
+        <attribute name="telefono" optional="YES" attributeType="String"/>
+        <relationship name="fk_citaMedica" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CitaMedica" inverseName="fk_medico" inverseEntity="CitaMedica"/>
+        <relationship name="fk_especialidad" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Especialidad" inverseName="fk_medico" inverseEntity="Especialidad"/>
+        <relationship name="fk_horarioMedico" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HorarioMedico" inverseName="fk_medico" inverseEntity="HorarioMedico"/>
+    </entity>
+    <entity name="Paciente" representedClassName="Paciente" syncable="YES" codeGenerationType="class">
+        <attribute name="correo" optional="YES" attributeType="String"/>
+        <attribute name="direccion" optional="YES" attributeType="String"/>
+        <attribute name="dni" optional="YES" attributeType="String"/>
+        <attribute name="fechaNacimiento" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="genero" optional="YES" attributeType="String"/>
+        <attribute name="id_paciente" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nombres" optional="YES" attributeType="String"/>
+        <attribute name="telefono" optional="YES" attributeType="String"/>
+        <relationship name="fk_citaMedica" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CitaMedica" inverseName="fk_paciente" inverseEntity="CitaMedica"/>
+        <relationship name="fk_usuario" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Usuario" inverseName="fk_paciente" inverseEntity="Usuario"/>
+    </entity>
+    <entity name="Usuario" representedClassName="Usuario" syncable="YES" codeGenerationType="class">
+        <attribute name="clave" optional="YES" attributeType="String"/>
+        <attribute name="fecha_registro" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id_paciente" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id_usuario" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="usuario" optional="YES" attributeType="String"/>
+        <relationship name="fk_paciente" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Paciente" inverseName="fk_usuario" inverseEntity="Paciente"/>
+    </entity>
+</model>
